@@ -1,43 +1,44 @@
 package com.todolist.todolist.entity;
+import com.todolist.todolist.enums.TodoState;
+import jakarta.persistence.*;
+import jakarta.validation.Valid;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.Builder;
+import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import java.time.LocalDateTime;
+import java.util.List;
 
-import java.util.Date;
-
+@Data
 @Entity
+@Builder
 public class Todo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Valid
+    @NotNull(message = "Input a topic")
+    @Size(min = 2,max = 200, message = "Topic must be more than 2 characters ")
     private String topic;
-    private String content;
 
 
-    //Setters and Getters
-    public Long getId() {
-        return id;
-    }
+    private TodoState todoState;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @NotNull(message = "Input an activity")
+    @NotEmpty(message = "Input an activity")
+    @OneToMany(mappedBy = "todo")
+    private List<Activity> activities;
 
-    public String getTopic() {
-        return topic;
-    }
+    @CreationTimestamp
+    private LocalDateTime addedDate;
 
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
+    @UpdateTimestamp
+    private LocalDateTime updatedDate;
 
-    public String getContent() {
-        return content;
-    }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
 }

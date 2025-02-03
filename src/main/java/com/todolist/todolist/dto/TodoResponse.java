@@ -1,8 +1,8 @@
 package com.todolist.todolist.dto;
 
-import com.todolist.todolist.enums.TodoState;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -10,10 +10,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TodoRequest {
+public class TodoResponse {
+    private Long id;
     private String topic;
     private List<String> activities;
-    private String todoState;
-
-
+    private LocalDateTime createdTime;
+    private LocalDateTime updatedTime;
+    private String status;
 }
